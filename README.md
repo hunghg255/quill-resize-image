@@ -1,41 +1,8 @@
 # QUILL-RESIZE-MODULE
 
-A module for Quill rich text editor to allow images to be resized.
-
-Also see [quill-resize-module](https://github.com/scrapooo/quill-resize-module),
-a module that enables resize for image/iframe/video.
-
 ## Demo
 
 ![image](https://raw.githubusercontent.com/scrapooo/quill-resize-module/master/demo/demo.gif)
-
-## Usage
-
-### Webpack/ES6
-
-`npm install @ssumo/quill-resize-module`
-
-```javascript
-import Quill from "quill";
-import ResizeModule from "@ssumo/quill-resize-module";
-
-Quill.register("modules/resize", ResizeModule);
-
-const quill = new Quill(editor, {
-  modules: {
-    resize: {
-      locale: {
-        altTip: "按住alt键比例缩放",
-        inputTip: "回车键确认",
-        floatLeft: "靠左",
-        floatRight: "靠右",
-        center: "居中",
-        restore: "还原",
-      },
-    },
-  },
-});
-```
 
 ### browser
 
