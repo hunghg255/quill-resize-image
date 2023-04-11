@@ -1,0 +1,38 @@
+{
+  "name": "quill-resize-module",
+  "version": "1.0.0",
+  "main": "./dist/quill-resize-module.js",
+  "typings": "types/main.d.ts",
+  "license": "MIT",
+  "keywords": [
+    "quill",
+    "quill-resize-module",
+    "quill-image-resize",
+    "quill-iframe-resize"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "@types/ms": "^0.7.30",
+    "rollup": "^1.0.0",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-less": "^1.1.2",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-typescript": "^1.0.0",
+    "rollup-plugin-uglify": "^6.0.4",
+    "ts-node": "^7.0.1",
+    "tslib": "^1.9.3",
+    "typescript": "^3.2.2"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "ts-node test/test.ts",
+    "pretest": "npm run build"
+  },
+  "files": [
+    "src",
+    "dist/*.js",
+    "types/*.d.ts",
+    "demo"
+  ]
+}

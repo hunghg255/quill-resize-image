@@ -1,0 +1,100 @@
+#editor-resizer {
+  position: absolute;
+  border: 1px dashed #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  .handler {
+    position: absolute;
+    right: -5px;
+    bottom: -5px;
+    width: 10px;
+    height: 10px;
+    border: 1px solid #333;
+    background-color: rgba(255, 255, 255, 0.8);
+    cursor: nwse-resize;
+    user-select: none;
+  }
+  .toolbar {
+    position: absolute;
+    top: -5em;
+    left: 50%;
+    padding: 0.5em;
+    border: 1px solid #fff;
+    border-radius: 3px;
+    background-color: #fff;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+    transform: translateX(-50%);
+    width: 20em;
+    .group {
+      display: flex;
+      border: 1px solid #aaa;
+      border-radius: 6px;
+      white-space: nowrap;
+      text-align: center;
+      line-height: 2;
+      color: rgba(0, 0, 0, 0.65);
+      &:not(:first-child) {
+        margin-top: 0.5em;
+      }
+      .btn {
+        flex: 1 0 0;
+        text-align: center;
+        width: 25%;
+        padding: 0 0.5rem;
+        display: inline-block;
+        vertical-align: top;
+        user-select: none;
+        color: inherit;
+        &:not(:last-child) {
+          border-right: 1px solid #bbb;
+        }
+        &:not(.btn-group):active {
+          background-color: rgba(0, 0, 0, 0.1);
+        }
+      }
+      .input-wrapper {
+        width: 25%;
+        border: 1px solid #eee;
+        position: relative;
+        border-right: 1px solid #bbb;
+        min-width: 4em;
+        &::after {
+          content: " ";
+          position: absolute;
+          height: 1px;
+          background-color: #333;
+          left: 0.5em;
+          right: 1em;
+          bottom: 0.2em;
+        }
+        input {
+          color: inherit;
+          text-align: center;
+          width: 100%;
+          border: none;
+          outline: none;
+          padding: 0 0.5em;
+          padding-right: 1.5em;
+          &:focus ~ .tooltip {
+            display: block;
+          }
+        }
+        .suffix {
+          position: absolute;
+          right: 0.5em;
+        }
+        .tooltip {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          font-size: small;
+          background-color: #fff;
+          box-shadow: 0 0 3px #a7a7a7;
+          padding: 0 0.6em;
+          border-radius: 5px;
+          zoom: 0.85;
+        }
+      }
+    }
+  }
+}
