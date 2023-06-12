@@ -1,10 +1,68 @@
 # QUILL-RESIZE-IMAGE
 
+
+[![npm version](https://badge.fury.io/js/quill-resize-image.svg)](https://badge.fury.io/js/quill-resize-image) [![npm](https://img.shields.io/npm/dw/quill-resize-image.svg?logo=npm)](https://www.npmjs.com/package/quill-resize-image) [![npm](https://img.shields.io/bundlephobia/minzip/quill-resize-image)](https://www.npmjs.com/package/quill-resize-image)
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+
 ## Demo
+[Quill Resize Image](https://quill-resize-image.vercel.app/)
 
-![image](https://raw.githubusercontent.com/hunghg255/quill-resize-module/master/demo/demo.gif)
+## Install
 
-### browser
+```bash
+npm i quill-resize-image@latest
+```
+
+With `yarn`
+
+```bash
+yarn add quill-resize-image
+```
+
+## Reactjs
+
+```tsx
+import ReactQuill, { Quill } from 'react-quill';
+import QuillResizeImage from 'quill-resize-image';
+
+/**
+- add object resize to modules.
+**/
+
+// resize: {
+//   locale: {},
+// },
+
+
+Quill.register("modules/resize", window.QuillResizeImage);
+
+const App = () => {
+  const Editor = {
+      modules: {
+        toolbar: {
+          container: [
+            ['image'],
+          ],
+        },
+        resize: {
+          locale: {},
+        },
+      },
+      formats: [
+        'image',
+      ],
+    };
+
+  return <ReactQuill
+      modules={Editor.modules}
+      formats={Editor.formats}
+      theme='snow'
+    />
+}
+
+```
+
+## Browser
 
 ```html
 <!DOCTYPE html>

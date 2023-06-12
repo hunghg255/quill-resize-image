@@ -1,12 +1,12 @@
 {
   "name": "quill-resize-image",
-  "version": "1.0.1",
-  "main": "./dist/quill-resize-module.js",
+  "version": "1.0.2",
+  "main": "./dist/quill-resize-image.js",
   "typings": "types/main.d.ts",
   "license": "MIT",
   "keywords": [
     "quill",
-    "quill-resize-module",
+    "quill-resize-image",
     "quill-image-resize",
     "quill-iframe-resize"
   ],
@@ -33,12 +33,12 @@
     "dist",
     "types/*.d.ts"
   ],
-  "homepage": "https://github.com/hunghg255/quill-resize-module",
+  "homepage": "https://github.com/hunghg255/quill-resize-image",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hunghg255/quill-resize-module"
+    "url": "https://github.com/hunghg255/quill-resize-image"
   },
   "bugs": {
-    "url": "https://github.com/hunghg255/quill-resize-module/issues"
+    "url": "https://github.com/hunghg255/quill-resize-image/issues"
   }
 }

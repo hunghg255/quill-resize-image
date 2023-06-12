@@ -9,7 +9,7 @@
       rel="stylesheet"
     />
     <script defer src="https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/gh/hunghg255/quill-resize-module/dist/quill-resize-module.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/gh/hunghg255/quill-resize-image/dist/quill-resize-image.min.js"></script>
   </head>
   <body>
     <div id="editor">
@@ -21,8 +21,8 @@
   </body>
   <script defer>
       document.addEventListener('DOMContentLoaded', function() {
-        if (!window.QuillResizeModule) return;
-        Quill.register("modules/resize", window.QuillResizeModule);
+        if (!window.QuillResizeImage) return;
+        Quill.register("modules/resize", window.QuillResizeImage);
 
         var toolbarOptions = [
           "bold",
