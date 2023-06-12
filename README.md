@@ -1,8 +1,8 @@
-# QUILL-RESIZE-MODULE
+# QUILL-RESIZE-IMAGE
 
 ## Demo
 
-![image](https://raw.githubusercontent.com/scrapooo/quill-resize-module/master/demo/demo.gif)
+![image](https://raw.githubusercontent.com/hunghg255/quill-resize-module/master/demo/demo.gif)
 
 ### browser
 
@@ -24,7 +24,7 @@
       integrity="sha384-MDio1/ps0nK1tabxUqZ+1w2NM9faPltR1mDqXcNleeuiSi0KBXqIsWofIp4r5A0+"
       src="http://lib.baomitu.com/quill/2.0.0-dev.3/quill.min.js"
     ></script>
-    <script src="../dist/quill-resize-module.js"></script>
+    <script src="https://raw.githubusercontent.com/hunghg255/quill-resize-module/master/dist/quill-resize-module.js"></script>
   </head>
   <body>
     <div id="editor">

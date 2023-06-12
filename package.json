@@ -1,5 +1,5 @@
 {
-  "name": "quill-resize-module",
+  "name": "quill-resize-image",
   "version": "1.0.0",
   "main": "./dist/quill-resize-module.js",
   "typings": "types/main.d.ts",
@@ -30,9 +30,15 @@
     "pretest": "npm run build"
   },
   "files": [
-    "src",
-    "dist/*.js",
-    "types/*.d.ts",
-    "demo"
-  ]
+    "dist",
+    "types/*.d.ts"
+  ],
+  "homepage": "https://github.com/hunghg255/quill-resize-module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hunghg255/quill-resize-module"
+  },
+  "bugs": {
+    "url": "https://github.com/hunghg255/quill-resize-module/issues"
+  }
 }
