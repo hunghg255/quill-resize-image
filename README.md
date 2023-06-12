@@ -82,7 +82,7 @@ const App = () => {
       integrity="sha384-MDio1/ps0nK1tabxUqZ+1w2NM9faPltR1mDqXcNleeuiSi0KBXqIsWofIp4r5A0+"
       src="http://lib.baomitu.com/quill/2.0.0-dev.3/quill.min.js"
     ></script>
-       <script defer src="https://cdn.jsdelivr.net/gh/hunghg255/quill-resize-module/dist/quill-resize-module.min.js"></script>
+       <script defer src="https://cdn.jsdelivr.net/gh/hunghg255/quill-resize-module/dist/quill-resize-image.min.js"></script>
   </head>
   <body>
     <div id="editor">
@@ -92,7 +92,7 @@ const App = () => {
     </div>
   </body>
   <script>
-    Quill.register("modules/resize", window.QuillResizeModule);
+    Quill.register("modules/resize", window.QuillResizeImage);
 
     var toolbarOptions = [
       "bold",
