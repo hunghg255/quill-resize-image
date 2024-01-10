@@ -1,10 +1,22 @@
-# QUILL-RESIZE-IMAGE
+<p align="center">
+<a href="https://www.npmjs.com/package/quill-resize-image" target="_blank" rel="noopener noreferrer">
+<img src="https://api.iconify.design/fluent:resize-image-20-filled.svg?color=%23fdb4e2" alt="logo" width='100'/></a>
+</p>
 
+<p align="center">
+  A library resize image for <a href="https://quilljs.com/" target="_blank" rel="noopener noreferrer">Quill</a> editor.
+</p>
 
-[![npm version](https://badge.fury.io/js/quill-resize-image.svg)](https://badge.fury.io/js/quill-resize-image) [![npm](https://img.shields.io/npm/dw/quill-resize-image.svg?logo=npm)](https://www.npmjs.com/package/quill-resize-image) [![npm](https://img.shields.io/bundlephobia/minzip/quill-resize-image)](https://www.npmjs.com/package/quill-resize-image)
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<p align="center">
+  <a href="https://www.npmjs.com/package/quill-resize-image" target="_blank" rel="noopener noreferrer"><img src="https://badge.fury.io/js/csvs-parsers.svg" alt="NPM Version" /></a>
+  <a href="https://www.npmjs.com/package/quill-resize-image" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/npm/dt/csvs-parsers.svg?logo=npm" alt="NPM Downloads" /></a>
+  <a href="https://bundlephobia.com/result?p=quill-resize-image" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/bundlephobia/minzip/quill-resize-image" alt="Minizip" /></a>
+  <a href="https://github.com/hunghg255/quill-resize-image/graphs/contributors" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/all_contributors-1-orange.svg" alt="Contributors" /></a>
+  <a href="https://github.com/hunghg255/quill-resize-image/blob/main/LICENSE" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/github/license/hunghg255/quill-resize-image" alt="License" /></a>
+</p>
 
 ## Demo
+
 [Quill Resize Image](https://quill-resize-image.vercel.app/)
 
 ## Install
