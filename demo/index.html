@@ -1,51 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link
-      href="https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.min.css"
-      rel="stylesheet"
-    />
-    <script defer src="https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/gh/hunghg255/quill-resize-image/dist/quill-resize-image.min.js"></script>
-  </head>
-  <body>
-    <div id="editor">
-      <p>Hello World!</p>
-      <p>Some initial <strong>bold</strong> text</p>
-    </div>
 
-    <div id="prev"></div>
-  </body>
-  <script defer>
-      document.addEventListener('DOMContentLoaded', function() {
-        if (!window.QuillResizeImage) return;
-        Quill.register("modules/resize", window.QuillResizeImage);
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link href="https://cdn.bootcdn.net/ajax/libs/quill/2.0.0/quill.snow.min.css" rel="stylesheet" />
+  <script defer src="https://cdn.bootcdn.net/ajax/libs/quill/2.0.0/quill.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/hunghg255/quill-resize-image/dist/quill-resize-image.min.js"></script>
+</head>
 
-        var toolbarOptions = [
-          "bold",
-          "italic",
-          "underline",
-          "strike",
-          "image",
-          "video",
-        ];
-        var quill = new Quill("#editor", {
-          theme: "snow",
-          modules: {
-            toolbar: toolbarOptions,
-            resize: {
-              locale: {},
-            },
-          },
-        });
+<body>
+  <div id="editor">
+    <p>Hello World!</p>
+    <p>Some initial <strong>bold</strong> text</p>
+  </div>
 
-        quill.on("text-change", (a, b, c) => {
-          document.getElementById("prev").innerHTML =
-            quill.scroll.domNode.innerHTML;
-        });
-      })
-  </script>
+  <div id="prev"></div>
+</body>
+<script defer>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (!window.QuillResizeImage) return;
+    Quill.register("modules/resize", window.QuillResizeImage);
+
+    var toolbarOptions = [
+      "bold",
+      "italic",
+      "underline",
+      "strike",
+      "image",
+      "video",
+    ];
+    var quill = new Quill("#editor", {
+      theme: "snow",
+      modules: {
+        toolbar: toolbarOptions,
+        resize: {
+          locale: {},
+        },
+      },
+    });
+
+    quill.on("text-change", (a, b, c) => {
+      document.getElementById("prev").innerHTML =
+        quill.scroll.domNode.innerHTML;
+    });
+  })
+</script>
+
 </html>
