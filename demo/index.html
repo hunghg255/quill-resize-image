@@ -42,9 +42,15 @@
     });
 
     quill.on("text-change", (a, b, c) => {
+      localStorage.setItem("content", quill.root.innerHTML);
       document.getElementById("prev").innerHTML =
         quill.scroll.domNode.innerHTML;
     });
+
+    const content = localStorage.getItem("content");
+    if (content) {
+      quill.root.innerHTML = content;
+    }
   })
 </script>
 
