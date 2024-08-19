@@ -32,6 +32,7 @@ function QuillResizeImage(quill: Quill, options?: QuillResizeImageOptions) {
       resizePlugin = new ResizePlugin(
         target,
         container.parentElement as HTMLElement,
+        container as HTMLElement,
         {
           ...options,
           onChange: triggerTextChange,
@@ -48,6 +49,7 @@ function QuillResizeImage(quill: Quill, options?: QuillResizeImageOptions) {
         resizePlugin = new ResizePlugin(
           item,
           container.parentElement as HTMLElement,
+          container as HTMLElement,
           {
             ...options,
             onChange: triggerTextChange,
