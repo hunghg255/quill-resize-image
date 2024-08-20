@@ -42,6 +42,7 @@ class ResizePlugin {
   resizeTarget: ResizeElement;
   resizer: HTMLElement | null = null;
   container: HTMLElement;
+  editor: HTMLElement;
   startResizePosition: Position | null = null;
   i18n: I18n;
   options: any;
@@ -49,6 +50,7 @@ class ResizePlugin {
   constructor(
     resizeTarget: ResizeElement,
     container: HTMLElement,
+    editor: HTMLElement,
     options?: ResizePluginOption
   ) {
     this.i18n = new I18n(options?.locale || defaultLocale);
@@ -60,7 +62,8 @@ class ResizePlugin {
         height: resizeTarget.clientHeight,
       };
     }
-
+    
+    this.editor = editor;
     this.container = container;
     this.initResizer();
     this.positionResizerToTarget(resizeTarget);
@@ -70,6 +73,7 @@ class ResizePlugin {
     this.startResize = this.startResize.bind(this);
     this.toolbarClick = this.toolbarClick.bind(this);
     this.toolbarInputChange = this.toolbarInputChange.bind(this);
+    this.onScroll = this.onScroll.bind(this);
     this.bindEvents();
   }
 
@@ -95,7 +99,7 @@ class ResizePlugin {
   positionResizerToTarget(el: HTMLElement) {
     if (this.resizer !== null) {
       this.resizer.style.setProperty("left", el.offsetLeft + "px");
-      this.resizer.style.setProperty("top", el.offsetTop + "px");
+      this.resizer.style.setProperty("top", (el.offsetTop - this.editor.scrollTop) + "px");
       this.resizer.style.setProperty("width", el.clientWidth + "px");
       this.resizer.style.setProperty("height", el.clientHeight + "px");
     }
@@ -108,6 +112,10 @@ class ResizePlugin {
     }
     window.addEventListener("mouseup", this.endResize);
     window.addEventListener("mousemove", this.resizing);
+    this.editor.addEventListener('scroll', this.onScroll);
+  }
+  onScroll() {
+    this.positionResizerToTarget(this.resizeTarget);
   }
   _setStylesForToolbar(type: string, styles: string | undefined) {
     const storeKey = `_styles_${type}`;
@@ -176,6 +184,7 @@ class ResizePlugin {
     this.container.removeChild(this.resizer as HTMLElement);
     window.removeEventListener("mouseup", this.endResize);
     window.removeEventListener("mousemove", this.resizing);
+    this.editor.removeEventListener('scroll', this.onScroll);
     this.resizer = null;
   }
 }

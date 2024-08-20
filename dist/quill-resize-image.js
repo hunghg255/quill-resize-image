@@ -105,7 +105,7 @@
     }(HTMLElement));
     var template = "\n<div class=\"handler\" title=\"{0}\"></div>\n<div class=\"toolbar\">\n  <div class=\"group\">\n    <a class=\"btn\" data-type=\"width\" data-styles=\"width:100%\">100%</a>\n    <a class=\"btn\" data-type=\"width\" data-styles=\"width:50%\">50%</a>\n    <span class=\"input-wrapper\"><input data-type=\"width\" maxlength=\"3\" /><span class=\"suffix\">%</span><span class=\"tooltip\">{5}</span></span>\n    <a class=\"btn\" data-type=\"width\" data-styles=\"width:auto\">{4}</a>\n  </div>\n  <div class=\"group\">\n    <a class=\"btn\" data-type=\"align\" data-styles=\"float:left\">{1}</a>\n    <a class=\"btn\" data-type=\"align\" data-styles=\"display:block;margin:auto;\">{2}</a>\n    <a class=\"btn\" data-type=\"align\" data-styles=\"float:right;\">{3}</a>\n    <a class=\"btn\" data-type=\"align\" data-styles=\"\">{4}</a>\n  </div>\n</div>\n";
     var ResizePlugin = /** @class */ (function () {
-        function ResizePlugin(resizeTarget, container, options) {
+        function ResizePlugin(resizeTarget, container, editor, options) {
             this.resizer = null;
             this.startResizePosition = null;
             this.i18n = new I18n((options === null || options === void 0 ? void 0 : options.locale) || defaultLocale);
@@ -117,6 +117,7 @@
                     height: resizeTarget.clientHeight,
                 };
             }
+            this.editor = editor;
             this.container = container;
             this.initResizer();
             this.positionResizerToTarget(resizeTarget);
@@ -125,6 +126,7 @@
             this.startResize = this.startResize.bind(this);
             this.toolbarClick = this.toolbarClick.bind(this);
             this.toolbarInputChange = this.toolbarInputChange.bind(this);
+            this.onScroll = this.onScroll.bind(this);
             this.bindEvents();
         }
         ResizePlugin.prototype.initResizer = function () {
@@ -140,7 +142,7 @@
         ResizePlugin.prototype.positionResizerToTarget = function (el) {
             if (this.resizer !== null) {
                 this.resizer.style.setProperty("left", el.offsetLeft + "px");
-                this.resizer.style.setProperty("top", el.offsetTop + "px");
+                this.resizer.style.setProperty("top", (el.offsetTop - this.editor.scrollTop) + "px");
                 this.resizer.style.setProperty("width", el.clientWidth + "px");
                 this.resizer.style.setProperty("height", el.clientHeight + "px");
             }
@@ -153,6 +155,10 @@
             }
             window.addEventListener("mouseup", this.endResize);
             window.addEventListener("mousemove", this.resizing);
+            this.editor.addEventListener('scroll', this.onScroll);
+        };
+        ResizePlugin.prototype.onScroll = function () {
+            this.positionResizerToTarget(this.resizeTarget);
         };
         ResizePlugin.prototype._setStylesForToolbar = function (type, styles) {
             var _a;
@@ -221,6 +227,7 @@
             this.container.removeChild(this.resizer);
             window.removeEventListener("mouseup", this.endResize);
             window.removeEventListener("mousemove", this.resizing);
+            this.editor.removeEventListener('scroll', this.onScroll);
             this.resizer = null;
         };
         return ResizePlugin;
@@ -280,7 +287,7 @@
             var target = e.target;
             if (e.target && ["img", "video"].includes(target.tagName.toLowerCase())) {
                 resizeTarge = target;
-                resizePlugin = new ResizePlugin(target, container.parentElement, __assign(__assign({}, options), { onChange: triggerTextChange }));
+                resizePlugin = new ResizePlugin(target, container.parentElement, container, __assign(__assign({}, options), { onChange: triggerTextChange }));
             }
         });
         quill.on("text-change", function (delta, source) {
@@ -288,7 +295,7 @@
             container.querySelectorAll("iframe").forEach(function (item) {
                 IframeClick.track(item, function () {
                     resizeTarge = item;
-                    resizePlugin = new ResizePlugin(item, container.parentElement, __assign(__assign({}, options), { onChange: triggerTextChange }));
+                    resizePlugin = new ResizePlugin(item, container.parentElement, container, __assign(__assign({}, options), { onChange: triggerTextChange }));
                 });
             });
         });
