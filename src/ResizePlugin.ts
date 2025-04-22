@@ -20,6 +20,7 @@ class ResizeElement extends HTMLElement {
 interface ResizePluginOption {
   locale?: Locale;
   [index: string]: any;
+  keepAspectRatio?: boolean;
 }
 const template = `
 <div class="handler" title="{0}"></div>
@@ -176,7 +177,12 @@ class ResizePlugin {
     }
 
     this.resizeTarget.style.setProperty("width", Math.max(width, 30) + "px");
-    this.resizeTarget.style.setProperty("height", Math.max(height, 30) + "px");
+    if (!this.options?.keepAspectRatio) {
+      this.resizeTarget.style.setProperty(
+        "height",
+        Math.max(height, 30) + "px"
+      );
+    }
     this.positionResizerToTarget(this.resizeTarget);
   }
 
