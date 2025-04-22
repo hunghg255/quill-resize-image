@@ -12,6 +12,11 @@ interface Quill {
 interface QuillResizeImageOptions {
   [index: string]: any;
   locale?: Locale;
+  disableMediaTypes?: {
+    disableImages?: boolean;
+    disableVideos?: boolean;
+    disableIframes?: boolean;
+  };
 }
 
 function QuillResizeImage(quill: Quill, options?: QuillResizeImageOptions) {
@@ -27,7 +32,13 @@ function QuillResizeImage(quill: Quill, options?: QuillResizeImageOptions) {
 
   container.addEventListener("click", (e: Event) => {
     const target: HTMLElement = e.target as HTMLElement;
-    if (e.target && ["img", "video"].includes(target.tagName.toLowerCase())) {
+    if (
+      e.target &&
+      [
+        !options?.disableMediaTypes?.disableImages && "img",
+        !options?.disableMediaTypes?.disableVideos && "video",
+      ].includes(target.tagName.toLowerCase())
+    ) {
       resizeTarge = target;
       resizePlugin = new ResizePlugin(
         target,
@@ -43,20 +54,24 @@ function QuillResizeImage(quill: Quill, options?: QuillResizeImageOptions) {
 
   quill.on("text-change", (delta: any, source: string) => {
     // iframe 大小调整
-    container.querySelectorAll("iframe").forEach((item: HTMLIFrameElement) => {
-      IframeOnClick.track(item, () => {
-        resizeTarge = item;
-        resizePlugin = new ResizePlugin(
-          item,
-          container.parentElement as HTMLElement,
-          container as HTMLElement,
-          {
-            ...options,
-            onChange: triggerTextChange,
-          }
-        );
-      });
-    });
+    if (!options?.disableMediaTypes?.disableIframes) {
+      container
+        .querySelectorAll("iframe")
+        .forEach((item: HTMLIFrameElement) => {
+          IframeOnClick.track(item, () => {
+            resizeTarge = item;
+            resizePlugin = new ResizePlugin(
+              item,
+              container.parentElement as HTMLElement,
+              container as HTMLElement,
+              {
+                ...options,
+                onChange: triggerTextChange,
+              }
+            );
+          });
+        });
+    }
   });
 
   document.addEventListener(
