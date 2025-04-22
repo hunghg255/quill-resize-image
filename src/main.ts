@@ -8,6 +8,7 @@ interface Quill {
   on: any;
   updateContents: (delta: any) => void;
   getContents: () => any;
+  isEnabled: () => boolean;
 }
 interface QuillResizeImageOptions {
   [index: string]: any;
@@ -37,7 +38,8 @@ function QuillResizeImage(quill: Quill, options?: QuillResizeImageOptions) {
       [
         !options?.disableMediaTypes?.disableImages && "img",
         !options?.disableMediaTypes?.disableVideos && "video",
-      ].includes(target.tagName.toLowerCase())
+      ].includes(target.tagName.toLowerCase()) &&
+      quill.isEnabled()
     ) {
       resizeTarge = target;
       resizePlugin = new ResizePlugin(
@@ -54,7 +56,7 @@ function QuillResizeImage(quill: Quill, options?: QuillResizeImageOptions) {
 
   quill.on("text-change", (delta: any, source: string) => {
     // iframe 大小调整
-    if (!options?.disableMediaTypes?.disableIframes) {
+    if (!options?.disableMediaTypes?.disableIframes && quill.isEnabled()) {
       container
         .querySelectorAll("iframe")
         .forEach((item: HTMLIFrameElement) => {
