@@ -13,6 +13,7 @@ interface Quill {
 interface QuillResizeImageOptions {
   [index: string]: any;
   locale?: Locale;
+  keepAspectRatio?: boolean;
 }
 
 function QuillResizeImage(quill: Quill, options?: QuillResizeImageOptions) {
