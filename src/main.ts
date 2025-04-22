@@ -18,6 +18,7 @@ interface QuillResizeImageOptions {
     disableVideos?: boolean;
     disableIframes?: boolean;
   };
+  keepAspectRatio?: boolean;
 }
 
 function QuillResizeImage(quill: Quill, options?: QuillResizeImageOptions) {
