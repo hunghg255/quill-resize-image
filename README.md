@@ -128,3 +128,12 @@ const App = () => {
   </script>
 </html>
 ```
+
+
+## All Contributors
+
+Thanks to the following friends for their contributions to project:
+
+<a href="https://github.com/hunghg255/quill-resize-image/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=hunghg255/quill-resize-image" alt="contributors">
+</a>
