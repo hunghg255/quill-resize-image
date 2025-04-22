@@ -284,30 +284,20 @@
             quill.updateContents(delta);
         }
         container.addEventListener("click", function (e) {
-            var _a, _b;
             var target = e.target;
-            if (e.target &&
-                [
-                    !((_a = options === null || options === void 0 ? void 0 : options.disableMediaTypes) === null || _a === void 0 ? void 0 : _a.disableImages) && "img",
-                    !((_b = options === null || options === void 0 ? void 0 : options.disableMediaTypes) === null || _b === void 0 ? void 0 : _b.disableVideos) && "video",
-                ].includes(target.tagName.toLowerCase())) {
+            if (e.target && ["img", "video"].includes(target.tagName.toLowerCase())) {
                 resizeTarge = target;
                 resizePlugin = new ResizePlugin(target, container.parentElement, container, __assign(__assign({}, options), { onChange: triggerTextChange }));
             }
         });
         quill.on("text-change", function (delta, source) {
-            var _a;
             // iframe 大小调整
-            if (!((_a = options === null || options === void 0 ? void 0 : options.disableMediaTypes) === null || _a === void 0 ? void 0 : _a.disableIframes)) {
-                container
-                    .querySelectorAll("iframe")
-                    .forEach(function (item) {
-                    IframeClick.track(item, function () {
-                        resizeTarge = item;
-                        resizePlugin = new ResizePlugin(item, container.parentElement, container, __assign(__assign({}, options), { onChange: triggerTextChange }));
-                    });
+            container.querySelectorAll("iframe").forEach(function (item) {
+                IframeClick.track(item, function () {
+                    resizeTarge = item;
+                    resizePlugin = new ResizePlugin(item, container.parentElement, container, __assign(__assign({}, options), { onChange: triggerTextChange }));
                 });
-            }
+            });
         });
         document.addEventListener("mousedown", function (e) {
             var _a, _b, _c;
