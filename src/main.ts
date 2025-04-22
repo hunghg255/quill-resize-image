@@ -13,6 +13,11 @@ interface Quill {
 interface QuillResizeImageOptions {
   [index: string]: any;
   locale?: Locale;
+  disableMediaTypes?: {
+    disableImages?: boolean;
+    disableVideos?: boolean;
+    disableIframes?: boolean;
+  };
   keepAspectRatio?: boolean;
 }
 
@@ -31,7 +36,10 @@ function QuillResizeImage(quill: Quill, options?: QuillResizeImageOptions) {
     const target: HTMLElement = e.target as HTMLElement;
     if (
       e.target &&
-      ["img", "video"].includes(target.tagName.toLowerCase()) &&
+      [
+        !options?.disableMediaTypes?.disableImages && "img",
+        !options?.disableMediaTypes?.disableVideos && "video",
+      ].includes(target.tagName.toLowerCase()) &&
       quill.isEnabled()
     ) {
       resizeTarge = target;
@@ -49,7 +57,7 @@ function QuillResizeImage(quill: Quill, options?: QuillResizeImageOptions) {
 
   quill.on("text-change", (delta: any, source: string) => {
     // iframe 大小调整
-    if (quill.isEnabled()) {
+    if (!options?.disableMediaTypes?.disableIframes && quill.isEnabled()) {
       container
         .querySelectorAll("iframe")
         .forEach((item: HTMLIFrameElement) => {
