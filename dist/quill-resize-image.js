@@ -285,19 +285,25 @@
         }
         container.addEventListener("click", function (e) {
             var target = e.target;
-            if (e.target && ["img", "video"].includes(target.tagName.toLowerCase())) {
+            if (e.target &&
+                ["img", "video"].includes(target.tagName.toLowerCase()) &&
+                quill.isEnabled()) {
                 resizeTarge = target;
                 resizePlugin = new ResizePlugin(target, container.parentElement, container, __assign(__assign({}, options), { onChange: triggerTextChange }));
             }
         });
         quill.on("text-change", function (delta, source) {
             // iframe 大小调整
-            container.querySelectorAll("iframe").forEach(function (item) {
-                IframeClick.track(item, function () {
-                    resizeTarge = item;
-                    resizePlugin = new ResizePlugin(item, container.parentElement, container, __assign(__assign({}, options), { onChange: triggerTextChange }));
+            if (quill.isEnabled()) {
+                container
+                    .querySelectorAll("iframe")
+                    .forEach(function (item) {
+                    IframeClick.track(item, function () {
+                        resizeTarge = item;
+                        resizePlugin = new ResizePlugin(item, container.parentElement, container, __assign(__assign({}, options), { onChange: triggerTextChange }));
+                    });
                 });
-            });
+            }
         });
         document.addEventListener("mousedown", function (e) {
             var _a, _b, _c;

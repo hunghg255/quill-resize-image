@@ -8,6 +8,7 @@ interface Quill {
   on: any;
   updateContents: (delta: any) => void;
   getContents: () => any;
+  isEnabled: () => boolean;
 }
 interface QuillResizeImageOptions {
   [index: string]: any;
@@ -27,7 +28,11 @@ function QuillResizeImage(quill: Quill, options?: QuillResizeImageOptions) {
 
   container.addEventListener("click", (e: Event) => {
     const target: HTMLElement = e.target as HTMLElement;
-    if (e.target && ["img", "video"].includes(target.tagName.toLowerCase())) {
+    if (
+      e.target &&
+      ["img", "video"].includes(target.tagName.toLowerCase()) &&
+      quill.isEnabled()
+    ) {
       resizeTarge = target;
       resizePlugin = new ResizePlugin(
         target,
@@ -43,20 +48,24 @@ function QuillResizeImage(quill: Quill, options?: QuillResizeImageOptions) {
 
   quill.on("text-change", (delta: any, source: string) => {
     // iframe 大小调整
-    container.querySelectorAll("iframe").forEach((item: HTMLIFrameElement) => {
-      IframeOnClick.track(item, () => {
-        resizeTarge = item;
-        resizePlugin = new ResizePlugin(
-          item,
-          container.parentElement as HTMLElement,
-          container as HTMLElement,
-          {
-            ...options,
-            onChange: triggerTextChange,
-          }
-        );
-      });
-    });
+    if (quill.isEnabled()) {
+      container
+        .querySelectorAll("iframe")
+        .forEach((item: HTMLIFrameElement) => {
+          IframeOnClick.track(item, () => {
+            resizeTarge = item;
+            resizePlugin = new ResizePlugin(
+              item,
+              container.parentElement as HTMLElement,
+              container as HTMLElement,
+              {
+                ...options,
+                onChange: triggerTextChange,
+              }
+            );
+          });
+        });
+    }
   });
 
   document.addEventListener(
