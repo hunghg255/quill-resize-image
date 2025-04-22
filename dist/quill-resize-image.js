@@ -142,7 +142,7 @@
         ResizePlugin.prototype.positionResizerToTarget = function (el) {
             if (this.resizer !== null) {
                 this.resizer.style.setProperty("left", el.offsetLeft + "px");
-                this.resizer.style.setProperty("top", el.offsetTop - this.editor.scrollTop + "px");
+                this.resizer.style.setProperty("top", (el.offsetTop - this.editor.scrollTop) + "px");
                 this.resizer.style.setProperty("width", el.clientWidth + "px");
                 this.resizer.style.setProperty("height", el.clientHeight + "px");
             }
@@ -155,7 +155,7 @@
             }
             window.addEventListener("mouseup", this.endResize);
             window.addEventListener("mousemove", this.resizing);
-            this.editor.addEventListener("scroll", this.onScroll);
+            this.editor.addEventListener('scroll', this.onScroll);
         };
         ResizePlugin.prototype.onScroll = function () {
             this.positionResizerToTarget(this.resizeTarget);
@@ -206,7 +206,6 @@
             (_a = this.options) === null || _a === void 0 ? void 0 : _a.onChange(this.resizeTarget);
         };
         ResizePlugin.prototype.resizing = function (e) {
-            var _a;
             if (!this.startResizePosition)
                 return;
             var deltaX = e.clientX - this.startResizePosition.left;
@@ -221,16 +220,14 @@
                 height = rate * width;
             }
             this.resizeTarget.style.setProperty("width", Math.max(width, 30) + "px");
-            if (!((_a = this.options) === null || _a === void 0 ? void 0 : _a.keepAspectRatio)) {
-                this.resizeTarget.style.setProperty("height", Math.max(height, 30) + "px");
-            }
+            this.resizeTarget.style.setProperty("height", Math.max(height, 30) + "px");
             this.positionResizerToTarget(this.resizeTarget);
         };
         ResizePlugin.prototype.destory = function () {
             this.container.removeChild(this.resizer);
             window.removeEventListener("mouseup", this.endResize);
             window.removeEventListener("mousemove", this.resizing);
-            this.editor.removeEventListener("scroll", this.onScroll);
+            this.editor.removeEventListener('scroll', this.onScroll);
             this.resizer = null;
         };
         return ResizePlugin;
