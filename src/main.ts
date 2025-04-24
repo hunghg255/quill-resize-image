@@ -19,6 +19,12 @@ interface QuillResizeImageOptions {
     disableIframes?: boolean;
   };
   keepAspectRatio?: boolean;
+  resizeConstraints?: {
+    minWidth?: number;
+    maxWidth?: number;
+    minHeight?: number;
+    maxHeight?: number;
+  };
 }
 
 function QuillResizeImage(quill: Quill, options?: QuillResizeImageOptions) {

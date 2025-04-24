@@ -21,6 +21,12 @@ interface ResizePluginOption {
   locale?: Locale;
   [index: string]: any;
   keepAspectRatio?: boolean;
+  resizeConstraints?: {
+    minWidth?: number;
+    maxWidth?: number;
+    minHeight?: number;
+    maxHeight?: number;
+  };
 }
 const template = `
 <div class="handler" title="{0}"></div>
@@ -176,12 +182,32 @@ class ResizePlugin {
       height = rate * width;
     }
 
-    this.resizeTarget.style.setProperty("width", Math.max(width, 30) + "px");
+    const minWidth = this.options?.resizeConstraints?.minWidth ?? 30;
+    const minHeight = this.options?.resizeConstraints?.minHeight ?? 30;
+
+    if (width < minWidth) {
+      width = minWidth;
+    }
+    if (
+      this.options?.resizeConstraints?.maxWidth !== undefined &&
+      width > this.options.resizeConstraints.maxWidth
+    ) {
+      width = this.options.resizeConstraints.maxWidth;
+    }
+
+    if (height < minHeight) {
+      height = minHeight;
+    }
+    if (
+      this.options?.resizeConstraints?.maxHeight !== undefined &&
+      height > this.options.resizeConstraints.maxHeight
+    ) {
+      height = this.options.resizeConstraints.maxHeight;
+    }
+    this.resizeTarget.style.setProperty("width", width + "px");
+
     if (!this.options?.keepAspectRatio) {
-      this.resizeTarget.style.setProperty(
-        "height",
-        Math.max(height, 30) + "px"
-      );
+      this.resizeTarget.style.setProperty("height", height + "px");
     }
     this.positionResizerToTarget(this.resizeTarget);
   }
