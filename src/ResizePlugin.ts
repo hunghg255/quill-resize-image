@@ -204,10 +204,10 @@ class ResizePlugin {
     ) {
       height = this.options.resizeConstraints.maxHeight;
     }
-    this.resizeTarget.style.setProperty("width", width + "px");
+    this.resizeTarget.setAttribute("width", width + "px");
 
     if (!this.options?.keepAspectRatio) {
-      this.resizeTarget.style.setProperty("height", height + "px");
+      this.resizeTarget.setAttribute("height", height + "px");
     }
     this.positionResizerToTarget(this.resizeTarget);
   }
