@@ -41,5 +41,6 @@
   },
   "bugs": {
     "url": "https://github.com/hunghg255/quill-resize-image/issues"
-  }
+  },
+  "packageManager": "pnpm@9.7.1"
 }
