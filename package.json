@@ -1,6 +1,6 @@
 {
   "name": "quill-resize-image",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "./dist/quill-resize-image.js",
   "typings": "types/main.d.ts",
   "license": "MIT",
