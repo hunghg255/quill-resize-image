@@ -104,12 +104,18 @@ class ResizePlugin {
     this.resizer = resizer;
   }
   positionResizerToTarget(el: HTMLElement) {
-    if (this.resizer !== null) {
-      this.resizer.style.setProperty("left", el.offsetLeft + "px");
-      this.resizer.style.setProperty("top", (el.offsetTop - this.editor.scrollTop) + "px");
-      this.resizer.style.setProperty("width", el.clientWidth + "px");
-      this.resizer.style.setProperty("height", el.clientHeight + "px");
-    }
+    if (!this.resizer || !this.editor) return;
+
+    const elRect = el.getBoundingClientRect();
+    const editorRect = this.editor.getBoundingClientRect();
+
+    const left = elRect.left - editorRect.left + this.editor.scrollLeft;
+    const top = elRect.top - editorRect.top + this.editor.scrollTop;
+
+    this.resizer.style.setProperty("left", `${left}px`);
+    this.resizer.style.setProperty("top", `${top}px`);
+    this.resizer.style.setProperty("width", `${el.clientWidth}px`);
+    this.resizer.style.setProperty("height", `${el.clientHeight}px`);
   }
   bindEvents() {
     if (this.resizer !== null) {
