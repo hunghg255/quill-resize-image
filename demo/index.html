@@ -7,9 +7,8 @@
   <title>Quill Resize Image</title>
   <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/quill-table-better@1/dist/quill-table-better.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/quill-table-better@1/dist/quill-table-better.js"></script>
-  <script defer src="../dist/quill-resize-image.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+  <script defer src="https://unpkg.com/quill-resize-image@1.0.5/dist/quill-resize-image.min.js"></script>
 </head>
 
 <body>
@@ -22,12 +21,9 @@
 </body>
 <script defer>
   document.addEventListener('DOMContentLoaded', function () {
-    if (!window.QuillResizeImage || !window.QuillTableBetter) return;
+    if (!window.QuillResizeImage ) return;
 
     Quill.register("modules/resize", window.QuillResizeImage);
-    Quill.register({
-      'modules/table-better': window.QuillTableBetter
-    }, true);
 
     var toolbarOptions = [
       "bold",
@@ -35,24 +31,14 @@
       "underline",
       "strike",
       "image",
-      "video",
-      'table-better'
+      "video"
     ];
     var quill = new Quill("#editor", {
       theme: "snow",
       modules: {
-        table: false,
         toolbar: toolbarOptions,
         resize: {
           locale: {},
-        },
-        'table-better': {
-          language: 'en_US',
-          menus: ['column', 'row', 'merge', 'table', 'cell', 'wrap', 'copy', 'delete'],
-          toolbarTable: true
-        },
-        keyboard: {
-          bindings: window.QuillTableBetter.keyboardBindings
         }
       },
     });
