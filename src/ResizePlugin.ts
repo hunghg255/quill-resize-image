@@ -106,16 +106,19 @@ class ResizePlugin {
   positionResizerToTarget(el: HTMLElement) {
     if (!this.resizer || !this.editor) return;
 
+    // Use getBoundingClientRect to get the latest position relative to viewport
     const elRect = el.getBoundingClientRect();
     const editorRect = this.editor.getBoundingClientRect();
 
-    const left = elRect.left - editorRect.left + this.editor.scrollLeft;
-    const top = elRect.top - editorRect.top + this.editor.scrollTop;
+    // Calculate position relative to the editor, including scroll offsets
+    const left = elRect.left - editorRect.left;
+    const top = elRect.top - editorRect.top;
 
-    this.resizer.style.setProperty("left", `${left}px`);
-    this.resizer.style.setProperty("top", `${top}px`);
-    this.resizer.style.setProperty("width", `${el.clientWidth}px`);
-    this.resizer.style.setProperty("height", `${el.clientHeight}px`);
+    // Update resizer position and size
+    this.resizer.style.left = `${left}px`;
+    this.resizer.style.top = `${top}px`;
+    this.resizer.style.width = `${el.clientWidth}px`;
+    this.resizer.style.height = `${el.clientHeight}px`;
   }
   bindEvents() {
     if (this.resizer !== null) {
