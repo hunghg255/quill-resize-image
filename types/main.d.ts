@@ -22,6 +22,7 @@ interface QuillResizeImageOptions {
     };
     keepAspectRatio?: boolean;
     showToolbar?: boolean;
+    persistAlignment?: boolean;
     resizeConstraints?: {
         minWidth?: number;
         maxWidth?: number;
@@ -41,6 +42,8 @@ declare class QuillResizeImage {
         width: string | null;
         height: string | null;
     }): void;
+    onAlignChange(target: HTMLElement, cssText: string): void;
+    findBlot(target: HTMLElement): any;
     showResizer(target: HTMLElement): void;
     hideResizer(): void;
     onClick(e: Event): void;

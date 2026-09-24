@@ -1,6 +1,7 @@
 import "./ResizePlugin.less";
 import { I18n, Locale, defaultLocale } from "./i18n";
 import { format } from "./utils";
+import { applyAlignStyle, removeEmptyStyle } from "./alignStyle";
 
 interface Size {
   width: number;
@@ -31,13 +32,10 @@ interface ResizePluginOption {
   };
   // Commit size changes (width/height attributes) so they end up in the delta
   onSizeChange?: (target: HTMLElement, size: { width: string | null; height: string | null }) => void;
+  // Commit alignment styles so they end up in the delta
+  onAlignChange?: (target: HTMLElement, cssText: string) => void;
   onChange?: (target: HTMLElement) => void;
 }
-
-// CSS properties owned by each toolbar group; cleared before a new value is applied
-const TOOLBAR_PROPS: { [type: string]: string[] } = {
-  align: ["float", "display", "margin", "margin-top", "margin-right", "margin-bottom", "margin-left"],
-};
 
 const template = `
 <div class="handler handler-nw" data-dir="nw" title="{0}"></div>
@@ -181,25 +179,21 @@ class ResizePlugin {
       })
     );
   }
-  _setStylesForToolbar(type: string, styles: string | undefined) {
-    const style: CSSStyleDeclaration = this.resizeTarget.style;
-    (TOOLBAR_PROPS[type] || []).forEach((prop) => style.removeProperty(prop));
-    (styles || "").split(";").forEach((declaration) => {
-      const index = declaration.indexOf(":");
-      if (index < 0) return;
-      const prop = declaration.slice(0, index).trim();
-      const value = declaration.slice(index + 1).trim();
-      if (prop) style.setProperty(prop, value);
-    });
-
+  _setAlign(styles: string | undefined) {
+    if (this.options.onAlignChange) {
+      this.options.onAlignChange(this.resizeTarget, styles || "");
+    } else {
+      applyAlignStyle(this.resizeTarget, styles || "");
+      this.options.onChange?.(this.resizeTarget);
+    }
     this.positionResizerToTarget(this.resizeTarget);
-    this.options.onChange?.(this.resizeTarget);
   }
   _setSize(width: string | null, height: string | null) {
     const style = this.resizeTarget.style;
     // Inline sizes would override the attributes and are not kept by Quill
     style.removeProperty("width");
     style.removeProperty("height");
+    removeEmptyStyle(this.resizeTarget);
     if (this.options.onSizeChange) {
       this.options.onSizeChange(this.resizeTarget, { width, height });
     } else {
@@ -227,8 +221,8 @@ class ResizePlugin {
     if (!type || !target.classList.contains("btn")) return;
     if (type === "width") {
       this._setSize(target.dataset.width || null, null);
-    } else {
-      this._setStylesForToolbar(type, target.dataset.styles);
+    } else if (type === "align") {
+      this._setAlign(target.dataset.styles);
     }
   }
   startResize(e: PointerEvent) {

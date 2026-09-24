@@ -136,6 +136,7 @@ const App = () => {
 resize: {
   locale: {},                 // labels: floatLeft, floatRight, center, restore, altTip, inputTip
   showToolbar: true,          // set to false to hide the floating toolbar and keep only the resize handles
+  persistAlignment: true,     // store left / center / right alignment in the delta (see below)
   keepAspectRatio: false,     // always keep the aspect ratio (or hold Alt while dragging)
   resizeConstraints: {        // limits in px
     minWidth: 30,
@@ -154,7 +155,7 @@ resize: {
 - Sizes are written as `width` / `height` attributes (e.g. `width="50%"`) through the Quill API, so they are kept in the delta, in undo history and in `getSemanticHTML()`.
 - Resize handles are available on all four corners and work with touch (pointer events).
 - Double clicks on a selected image are forwarded to the image, so your own `dblclick` handlers keep working.
-- Alignment (left / center / right) is applied as inline style. Quill does not keep inline styles in the delta, so alignment is not persisted when you reload from a delta.
+- Alignment (left / center / right) is stored in the delta as a `style` attribute of the image / video (e.g. `{ insert: { image }, attributes: { style: "float: left; margin: 0px 1em 1em 0px;" } }`). To do this the module teaches Quill's `image` and `video` formats to keep the `float`, `display` and `margin` inline styles (only those). Set `persistAlignment: false` to opt out.
 
 ## Cleanup
 

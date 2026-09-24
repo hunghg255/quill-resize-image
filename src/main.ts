@@ -1,6 +1,7 @@
 import ResizePlugin from "./ResizePlugin";
 import IframeOnClick from "./IframeClick";
 import { Locale } from "./i18n";
+import { applyAlignStyle, patchAlignFormat } from "./alignStyle";
 
 interface Quill {
   container: HTMLElement;
@@ -24,6 +25,7 @@ interface QuillResizeImageOptions {
   };
   keepAspectRatio?: boolean;
   showToolbar?: boolean;
+  persistAlignment?: boolean;
   resizeConstraints?: {
     minWidth?: number;
     maxWidth?: number;
@@ -47,7 +49,17 @@ class QuillResizeImage {
     this.onTextChange = this.onTextChange.bind(this);
     this.onPointerDown = this.onPointerDown.bind(this);
     this.onSizeChange = this.onSizeChange.bind(this);
+    this.onAlignChange = this.onAlignChange.bind(this);
     this.triggerTextChange = this.triggerTextChange.bind(this);
+
+    if (this.options.persistAlignment !== false) {
+      const Quill = quill.constructor as any;
+      ["formats/image", "formats/video"].forEach((path) => {
+        try {
+          patchAlignFormat(Quill?.import?.(path));
+        } catch (e) {}
+      });
+    }
 
     quill.root.addEventListener("click", this.onClick);
     quill.on("text-change", this.onTextChange);
@@ -68,9 +80,8 @@ class QuillResizeImage {
     target: HTMLElement,
     size: { width: string | null; height: string | null }
   ) {
-    const Quill = this.quill.constructor as any;
-    const blot = Quill?.find?.(target);
-    if (blot && blot.domNode === target && typeof blot.format === "function") {
+    const blot = this.findBlot(target);
+    if (blot) {
       const index = this.quill.getIndex(blot);
       this.quill.formatText(
         index,
@@ -98,6 +109,34 @@ class QuillResizeImage {
     }
   }
 
+  // Apply alignment through Quill so it is stored as a `style` format in the delta
+  onAlignChange(target: HTMLElement, cssText: string) {
+    const blot = this.findBlot(target);
+    if (
+      blot &&
+      this.options.persistAlignment !== false &&
+      blot.statics?.__resizeAlignPatched
+    ) {
+      this.quill.formatText(
+        this.quill.getIndex(blot),
+        1,
+        { style: cssText || false },
+        "user"
+      );
+    } else {
+      applyAlignStyle(target, cssText);
+      this.triggerTextChange();
+    }
+  }
+
+  findBlot(target: HTMLElement) {
+    const Quill = this.quill.constructor as any;
+    const blot = Quill?.find?.(target);
+    return blot && blot.domNode === target && typeof blot.format === "function"
+      ? blot
+      : null;
+  }
+
   showResizer(target: HTMLElement) {
     if (this.resizePlugin && this.resizeTarget === target) {
       this.resizePlugin.reposition();
@@ -113,6 +152,7 @@ class QuillResizeImage {
         ...this.options,
         onChange: this.triggerTextChange,
         onSizeChange: this.onSizeChange,
+        onAlignChange: this.onAlignChange,
       }
     );
   }

@@ -30,6 +30,7 @@ interface ResizePluginOption {
         width: string | null;
         height: string | null;
     }) => void;
+    onAlignChange?: (target: HTMLElement, cssText: string) => void;
     onChange?: (target: HTMLElement) => void;
 }
 declare class ResizePlugin {
@@ -46,7 +47,7 @@ declare class ResizePlugin {
     reposition(): void;
     bindEvents(): void;
     onDblClick(e: MouseEvent): void;
-    _setStylesForToolbar(type: string, styles: string | undefined): void;
+    _setAlign(styles: string | undefined): void;
     _setSize(width: string | null, height: string | null): void;
     toolbarInputChange(e: Event): void;
     toolbarClick(e: MouseEvent): void;
