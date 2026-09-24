@@ -6,7 +6,7 @@ class Iframe {
 class IframeClick {
   static resolution: number = 200;
   static iframes: Array<Iframe> = [];
-  static interval: NodeJS.Timeout | null = null;
+  static interval: ReturnType<typeof setInterval> | null = null;
 
   static track(element: HTMLIFrameElement, cb: Function) {
     this.iframes.push(new Iframe(element, cb));
@@ -14,6 +14,14 @@ class IframeClick {
       this.interval = setInterval(() => {
         IframeClick.checkClick();
       }, this.resolution);
+    }
+  }
+
+  static untrack(element: HTMLIFrameElement) {
+    this.iframes = this.iframes.filter((item) => item.element !== element);
+    if (!this.iframes.length && this.interval) {
+      clearInterval(this.interval);
+      this.interval = null;
     }
   }
 

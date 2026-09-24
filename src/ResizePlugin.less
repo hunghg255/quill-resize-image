@@ -1,21 +1,71 @@
 #editor-resizer {
   position: absolute;
+  z-index: 10;
   border: 1px dashed #fff;
   background-color: rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
   .handler {
     position: absolute;
-    right: -5px;
-    bottom: -5px;
     width: 10px;
     height: 10px;
     border: 1px solid #333;
     background-color: rgba(255, 255, 255, 0.8);
-    cursor: nwse-resize;
     user-select: none;
+    // Let pointer events drive the resize on touch screens instead of scrolling
+    touch-action: none;
+    z-index: 1;
+    &.handler-nw {
+      left: -5px;
+      top: -5px;
+      cursor: nwse-resize;
+    }
+    &.handler-ne {
+      right: -5px;
+      top: -5px;
+      cursor: nesw-resize;
+    }
+    &.handler-sw {
+      left: -5px;
+      bottom: -5px;
+      cursor: nesw-resize;
+    }
+    &.handler-se {
+      right: -5px;
+      bottom: -5px;
+      cursor: nwse-resize;
+    }
+    @media (pointer: coarse) {
+      width: 20px;
+      height: 20px;
+      &.handler-nw,
+      &.handler-sw {
+        left: -10px;
+      }
+      &.handler-ne,
+      &.handler-se {
+        right: -10px;
+      }
+      &.handler-nw,
+      &.handler-ne {
+        top: -10px;
+      }
+      &.handler-sw,
+      &.handler-se {
+        bottom: -10px;
+      }
+    }
+  }
+  &.no-toolbar .toolbar {
+    display: none;
+  }
+  &.toolbar-bottom .toolbar {
+    top: calc(100% + 10px);
+    bottom: auto;
   }
   .toolbar {
     position: absolute;
-    top: -5em;
+    // Keep the toolbar clear of the top resize handles
+    bottom: calc(100% + 10px);
     left: 50%;
     padding: 0.5em;
     border: 1px solid #fff;
