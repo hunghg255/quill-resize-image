@@ -4,6 +4,7 @@ declare class Locale {
     floatRight?: string;
     center?: string;
     restore?: string;
+    inputTip?: string;
 }
 declare class I18n {
     config: Locale;

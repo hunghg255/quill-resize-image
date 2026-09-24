@@ -1,4 +1,3 @@
-/// <reference types="node" />
 declare class Iframe {
     element: HTMLIFrameElement;
     cb: Function;
@@ -8,8 +7,9 @@ declare class Iframe {
 declare class IframeClick {
     static resolution: number;
     static iframes: Array<Iframe>;
-    static interval: NodeJS.Timeout | null;
+    static interval: ReturnType<typeof setInterval> | null;
     static track(element: HTMLIFrameElement, cb: Function): void;
+    static untrack(element: HTMLIFrameElement): void;
     static checkClick(): void;
 }
 export default IframeClick;

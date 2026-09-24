@@ -130,6 +130,51 @@ const App = () => {
 ```
 
 
+## Options
+
+```js
+resize: {
+  locale: {},                 // labels: floatLeft, floatRight, center, restore, altTip, inputTip
+  showToolbar: true,          // set to false to hide the floating toolbar and keep only the resize handles
+  keepAspectRatio: false,     // always keep the aspect ratio (or hold Alt while dragging)
+  resizeConstraints: {        // limits in px
+    minWidth: 30,
+    minHeight: 30,
+    maxWidth: undefined,
+    maxHeight: undefined,
+  },
+  disableMediaTypes: {
+    disableImages: false,
+    disableVideos: false,
+    disableIframes: false,
+  },
+}
+```
+
+- Sizes are written as `width` / `height` attributes (e.g. `width="50%"`) through the Quill API, so they are kept in the delta, in undo history and in `getSemanticHTML()`.
+- Resize handles are available on all four corners and work with touch (pointer events).
+- Double clicks on a selected image are forwarded to the image, so your own `dblclick` handlers keep working.
+- Alignment (left / center / right) is applied as inline style. Quill does not keep inline styles in the delta, so alignment is not persisted when you reload from a delta.
+
+## Cleanup
+
+Call `destroy()` on the module when the editor is unmounted to remove every listener it registered:
+
+```js
+quill.getModule("resize").destroy();
+```
+
+## React: keep `modules` stable
+
+If `modules` (for example a toolbar `handlers` object) is created inside the component body, React Quill re-creates the editor on every render and the resizer stops working. Memoize it:
+
+```tsx
+const modules = useMemo(() => ({
+  toolbar: { container: [["image"]], handlers: { image: handleImageUpload } },
+  resize: { locale: {} },
+}), []);
+```
+
 ## All Contributors
 
 Thanks to the following friends for their contributions to project:
