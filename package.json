@@ -28,7 +28,9 @@
     "dev": "rollup -c -w",
     "test": "ts-node test/test.ts",
     "prepublishOnly": "pnpm build",
-    "release": "bumpp"
+    "release": "bumpp",
+    "docs:dev": "pnpm --dir docs install && pnpm --dir docs dev",
+    "docs:build": "pnpm --dir docs install && pnpm --dir docs build"
   },
   "files": [
     "dist",

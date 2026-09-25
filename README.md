@@ -19,6 +19,15 @@
 
 [Quill Resize Image](https://quill-resize-image.vercel.app/)
 
+### Docs & playground
+
+The `docs/` folder is a React (Vite) site with the full documentation and a live playground that runs the library from `src/`:
+
+```bash
+pnpm docs:dev    # start it locally
+pnpm docs:build  # static site in docs/dist
+```
+
 ## Install
 
 ```bash
