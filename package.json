@@ -24,7 +24,7 @@
     "typescript": "^3.9.10"
   },
   "scripts": {
-    "build": "rollup -c",
+    "build": "tsc --newLine lf && rollup -c",
     "dev": "rollup -c -w",
     "test": "ts-node test/test.ts",
     "prepublishOnly": "pnpm build",

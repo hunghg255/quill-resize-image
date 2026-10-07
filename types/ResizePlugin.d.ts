@@ -1,4 +1,3 @@
-import "./ResizePlugin.less";
 import { I18n, Locale } from "./i18n";
 interface Size {
     width: number;
