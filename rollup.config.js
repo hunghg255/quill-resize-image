@@ -5,7 +5,7 @@ import { uglify } from "rollup-plugin-uglify";
 import less from "rollup-plugin-less";
 export default [
   {
-    input: "src/main.ts",
+    input: "src/index.js",
     output: {
       name: "QuillResizeImage",
       file: "dist/quill-resize-image.js",
@@ -19,7 +19,7 @@ export default [
     ],
   },
   {
-    input: "src/main.ts",
+    input: "src/index.js",
     output: {
       name: "QuillResizeImage",
       file: "dist/quill-resize-image.min.js",

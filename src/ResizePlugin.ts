@@ -1,4 +1,3 @@
-import "./ResizePlugin.less";
 import { I18n, Locale, defaultLocale } from "./i18n";
 import { format } from "./utils";
 import { applyAlignStyle, removeEmptyStyle } from "./alignStyle";
